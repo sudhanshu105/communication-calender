@@ -46,7 +46,7 @@ export const LogCommunication: React.FC<LogCommunicationProps> = ({
             id="company"
             name="company"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block text-gray-600 w-full border-b border-r border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           >
             <option value="">Select a company</option>
             {companies.map((company) => (
@@ -66,7 +66,7 @@ export const LogCommunication: React.FC<LogCommunicationProps> = ({
           id="method"
           name="method"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block text-gray-600 w-full border-b border-r border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         >
           <option value="">Select a method</option>
           {communicationMethods.map((method) => (
@@ -87,7 +87,7 @@ export const LogCommunication: React.FC<LogCommunicationProps> = ({
           name="date"
           required
           defaultValue={new Date().toISOString().split('T')[0]}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block text-gray-600 w-full border-b border-r border-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 
@@ -99,7 +99,7 @@ export const LogCommunication: React.FC<LogCommunicationProps> = ({
           id="notes"
           name="notes"
           rows={3}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full resize-none ps-0.5 py-1 border-b border-r border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 

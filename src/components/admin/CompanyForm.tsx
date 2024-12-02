@@ -40,7 +40,7 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
           name="name"
           id="name"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 
@@ -53,7 +53,7 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
           name="location"
           id="location"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 
@@ -66,7 +66,7 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
           name="linkedinProfile"
           id="linkedinProfile"
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 
@@ -83,21 +83,21 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
                   newEmails[index] = e.target.value;
                   setEmails(newEmails);
                 }}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
               {index === emails.length - 1 ? (
                 <button
                   type="button"
                   onClick={() => setEmails([...emails, ''])}
-                  className="inline-flex items-center p-2 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="inline-flex align-middle justify-center items-center p-2 border border-transparent ps-1 py-1 shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  <Plus className="h-4 w-4" />
+                  <Plus className="h-4 w-4 flex" />
                 </button>
               ) : (
                 <button
                   type="button"
                   onClick={() => setEmails(emails.filter((_, i) => i !== index))}
-                  className="inline-flex items-center p-2 border border-transparent rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  className="inline-flex items-center p-2 border border-transparent ps-1 py-1 shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -120,13 +120,13 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
                   newPhones[index] = e.target.value;
                   setPhoneNumbers(newPhones);
                 }}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
               {index === phoneNumbers.length - 1 ? (
                 <button
                   type="button"
                   onClick={() => setPhoneNumbers([...phoneNumbers, ''])}
-                  className="inline-flex items-center p-2 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="inline-flex items-center p-2 border border-transparent ps-0.5 py-1 shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   <Plus className="h-4 w-4" />
                 </button>
@@ -134,7 +134,7 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
                 <button
                   type="button"
                   onClick={() => setPhoneNumbers(phoneNumbers.filter((_, i) => i !== index))}
-                  className="inline-flex items-center p-2 border border-transparent rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  className="inline-flex items-center p-2 border border-transparent ps-0.5 py-1 shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -155,7 +155,7 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
           min="1"
           required
           defaultValue="14"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 
@@ -167,14 +167,14 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
           name="comments"
           id="comments"
           rows={3}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 
       <div>
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="w-full flex justify-center py-2 px-4 border border-transparent ps-0.5 py-1 shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Add Company
         </button>
