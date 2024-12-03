@@ -39,14 +39,17 @@ export const LogCommunication: React.FC<LogCommunicationProps> = ({
     <form onSubmit={handleSubmit} className="space-y-4">
       {selectedCompanies.length === 0 && (
         <div>
-          <label htmlFor="company" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="company"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
             Company
           </label>
           <select
             id="company"
             name="company"
             required
-            className="mt-1 block text-gray-600 w-full border-b border-r border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           >
             <option value="">Select a company</option>
             {companies.map((company) => (
@@ -59,14 +62,17 @@ export const LogCommunication: React.FC<LogCommunicationProps> = ({
       )}
 
       <div>
-        <label htmlFor="method" className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="method"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
           Communication Method
         </label>
         <select
           id="method"
           name="method"
           required
-          className="mt-1 block text-gray-600 w-full border-b border-r border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         >
           <option value="">Select a method</option>
           {communicationMethods.map((method) => (
@@ -78,7 +84,10 @@ export const LogCommunication: React.FC<LogCommunicationProps> = ({
       </div>
 
       <div>
-        <label htmlFor="date" className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="date"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
           Date
         </label>
         <input
@@ -87,19 +96,22 @@ export const LogCommunication: React.FC<LogCommunicationProps> = ({
           name="date"
           required
           defaultValue={new Date().toISOString().split('T')[0]}
-          className="mt-1 block text-gray-600 w-full border-b border-r border-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 
       <div>
-        <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="notes"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
           Notes
         </label>
         <textarea
           id="notes"
           name="notes"
           rows={3}
-          className="mt-1 block w-full resize-none ps-0.5 py-1 border-b border-r border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 

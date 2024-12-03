@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Company } from '../../types';
 import { Plus, Trash2 } from 'lucide-react';
 
 interface CompanyFormProps {
   onSubmit: (company: Omit<Company, 'id'>) => void;
+  editingCompany?: Company | null;
 }
 
-export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
+export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit, editingCompany }) => {
   const [emails, setEmails] = React.useState<string[]>(['']);
   const [phoneNumbers, setPhoneNumbers] = React.useState<string[]>(['']);
+  const formRef = React.useRef<HTMLFormElement>(null);
+  
+  useEffect(() => {
+    if (editingCompany) {
+      setEmails(editingCompany.emails.length > 0 ? editingCompany.emails : ['']);
+      setPhoneNumbers(editingCompany.phoneNumbers.length > 0 ? editingCompany.phoneNumbers : ['']);
+      
+      // Set form values
+      if (formRef.current) {
+        const form = formRef.current;
+        form.name.value = editingCompany.name;
+        form.location.value = editingCompany.location;
+        form.linkedinProfile.value = editingCompany.linkedinProfile;
+        form.periodicity.value = editingCompany.communicationPeriodicity;
+        form.comments.value = editingCompany.comments;
+      }
+    }
+  }, [editingCompany]);
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,15 +43,17 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
       communicationPeriodicity: parseInt(formData.get('periodicity') as string, 10),
     });
     
-    e.currentTarget.reset();
-    setEmails(['']);
-    setPhoneNumbers(['']);
+    if (!editingCompany) {
+      e.currentTarget.reset();
+      setEmails(['']);
+      setPhoneNumbers(['']);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
           Company Name
         </label>
         <input
@@ -40,12 +61,12 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
           name="name"
           id="name"
           required
-          className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 
       <div>
-        <label htmlFor="location" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
           Location
         </label>
         <input
@@ -53,12 +74,12 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
           name="location"
           id="location"
           required
-          className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 
       <div>
-        <label htmlFor="linkedinProfile" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="linkedinProfile" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
           LinkedIn Profile
         </label>
         <input
@@ -66,12 +87,12 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
           name="linkedinProfile"
           id="linkedinProfile"
           required
-          className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Email Addresses</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">Email Addresses</label>
         <div className="space-y-2">
           {emails.map((email, index) => (
             <div key={index} className="flex gap-2">
@@ -83,21 +104,21 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
                   newEmails[index] = e.target.value;
                   setEmails(newEmails);
                 }}
-                className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
               {index === emails.length - 1 ? (
                 <button
                   type="button"
                   onClick={() => setEmails([...emails, ''])}
-                  className="inline-flex align-middle justify-center items-center p-2 border border-transparent ps-1 py-1 shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="inline-flex items-center p-2 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  <Plus className="h-4 w-4 flex" />
+                  <Plus className="h-4 w-4" />
                 </button>
               ) : (
                 <button
                   type="button"
                   onClick={() => setEmails(emails.filter((_, i) => i !== index))}
-                  className="inline-flex items-center p-2 border border-transparent ps-1 py-1 shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  className="inline-flex items-center p-2 border border-transparent rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -108,7 +129,7 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Phone Numbers</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">Phone Numbers</label>
         <div className="space-y-2">
           {phoneNumbers.map((phone, index) => (
             <div key={index} className="flex gap-2">
@@ -120,13 +141,13 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
                   newPhones[index] = e.target.value;
                   setPhoneNumbers(newPhones);
                 }}
-                className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
               {index === phoneNumbers.length - 1 ? (
                 <button
                   type="button"
                   onClick={() => setPhoneNumbers([...phoneNumbers, ''])}
-                  className="inline-flex items-center p-2 border border-transparent ps-0.5 py-1 shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="inline-flex items-center p-2 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   <Plus className="h-4 w-4" />
                 </button>
@@ -134,7 +155,7 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
                 <button
                   type="button"
                   onClick={() => setPhoneNumbers(phoneNumbers.filter((_, i) => i !== index))}
-                  className="inline-flex items-center p-2 border border-transparent ps-0.5 py-1 shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  className="inline-flex items-center p-2 border border-transparent rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -145,7 +166,7 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
       </div>
 
       <div>
-        <label htmlFor="periodicity" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="periodicity" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
           Communication Periodicity (days)
         </label>
         <input
@@ -155,28 +176,28 @@ export const CompanyForm: React.FC<CompanyFormProps> = ({ onSubmit }) => {
           min="1"
           required
           defaultValue="14"
-          className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 
       <div>
-        <label htmlFor="comments" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="comments" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
           Comments
         </label>
         <textarea
           name="comments"
           id="comments"
           rows={3}
-          className="mt-1 block w-full px-2 py-1 border-b border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
 
       <div>
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent ps-0.5 py-1 shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          Add Company
+          {editingCompany ? 'Update Company' : 'Add Company'}
         </button>
       </div>
     </form>

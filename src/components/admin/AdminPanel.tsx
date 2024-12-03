@@ -5,6 +5,7 @@ import { CommunicationMethodForm } from './CommunicationMethodForm';
 import { CommunicationMethodList } from './CommunicationMethodList';
 import { useStore } from '../../store/useStore';
 import { Company, CommunicationMethod } from '../../types';
+import { scheduleMandatoryCommunications } from '../../utils/companyScheduler';
 
 export const AdminPanel: React.FC = () => {
   const {
@@ -17,6 +18,7 @@ export const AdminPanel: React.FC = () => {
     updateCommunicationMethod,
     deleteCommunicationMethod,
     reorderCommunicationMethod,
+    addCommunication,
   } = useStore();
 
   const [editingCompany, setEditingCompany] = React.useState<Company | null>(null);
@@ -27,7 +29,12 @@ export const AdminPanel: React.FC = () => {
       updateCompany({ ...companyData, id: editingCompany.id });
       setEditingCompany(null);
     } else {
-      addCompany({ ...companyData, id: crypto.randomUUID() });
+      const newCompany = { ...companyData, id: crypto.randomUUID() };
+      addCompany(newCompany);
+      
+      // Schedule mandatory communications
+      const scheduledCommunications = scheduleMandatoryCommunications(newCompany, communicationMethods);
+      scheduledCommunications.forEach(addCommunication);
     }
   };
 
@@ -45,16 +52,19 @@ export const AdminPanel: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h2 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
           {editingCompany ? 'Edit Company' : 'Add New Company'}
         </h2>
-        <CompanyForm onSubmit={handleCompanySubmit} />
+        <CompanyForm 
+          onSubmit={handleCompanySubmit} 
+          editingCompany={editingCompany}
+        />
       </div>
       
-      <div className="bg-white rounded-lg shadow">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-lg font-medium text-gray-900">Companies</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-lg font-medium text-gray-900 dark:text-white">Companies</h2>
         </div>
         <CompanyList
           companies={companies}
@@ -63,16 +73,19 @@ export const AdminPanel: React.FC = () => {
         />
       </div>
 
-      <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h2 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
           {editingMethod ? 'Edit Communication Method' : 'Add Communication Method'}
         </h2>
-        <CommunicationMethodForm onSubmit={handleMethodSubmit} />
+        <CommunicationMethodForm 
+          onSubmit={handleMethodSubmit}
+          editingMethod={editingMethod}
+        />
       </div>
 
-      <div className="bg-white rounded-lg shadow">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-lg font-medium text-gray-900">Communication Methods</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-lg font-medium text-gray-900 dark:text-white">Communication Methods</h2>
         </div>
         <div className="p-6">
           <CommunicationMethodList

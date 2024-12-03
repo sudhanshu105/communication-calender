@@ -131,3 +131,100 @@ export const useStore = create<AppState>()(
     }
   )
 );
+
+
+
+
+export const initializeSampleData = () => {
+  const {
+    addCompany,
+    addCommunication,
+    companies,
+    communications,
+  } = useStore.getState();
+
+  // Sample Companies
+  const sampleCompanies: Company[] = [
+    {
+      id: '1',
+      name: 'ENTNT',
+      location: 'Abu Dhabi',
+      linkedinProfile: 'https://www.linkedin.com/company/entnt/',
+      emails: ['contact@entnt.com', 'hr@entnt.com'],
+      phoneNumbers: ['+1-800-555-1234'],
+      comments: 'Potential partnership opportunity.',
+      communicationPeriodicity: 7,
+    },
+    {
+      id: '2',
+      name: 'EduWorld',
+      location: 'Austin, TX',
+      linkedinProfile: 'https://linkedin.com/company/eduworld',
+      emails: ['info@eduworld.com'],
+      phoneNumbers: ['+1-800-555-5678'],
+      comments: 'Interested in EdTech solutions.',
+      communicationPeriodicity: 14,
+    },
+    {
+      id: '3',
+      name: 'TechCorp',
+      location: 'San Francisco, CA',
+      linkedinProfile: 'https://linkedin.com/company/techcorp',
+      emails: ['contact@techcorp.com'],
+      phoneNumbers: ['+1-987-456-1234', '+1-435-346-3452'],
+      comments: 'Potential partnership opportunity.',
+      communicationPeriodicity: 7,
+    }
+  ];
+
+  // Sample Communications
+  const sampleCommunications: Communication[] = [
+    {
+      id: '101',
+      companyId: '1',
+      methodId: '1',
+      date: new Date(),
+      notes: 'Posted about our new product launch.',
+    },
+    {
+      id: '102',
+      companyId: '1',
+      methodId: '2',
+      date: new Date('2024-11-23T10:30:00'),
+      notes: 'Message with potentical candidates for openings.',
+    },
+    {
+      id: '103',
+      companyId: '2',
+      methodId: '2',
+      date: new Date('2024-11-12T10:30:00'),
+      notes: 'Followed up on partnership discussions.',
+    },
+    {
+      id: '104',
+      companyId: '2',
+      methodId: '1',
+      date: new Date(),
+      notes: 'Followed up on  Recruitment discussions.',
+    },
+    {
+      id: '105',
+      companyId: '3',
+      methodId: '3',
+      date: new Date('2024-12-01T10:30:00'), 
+      notes: 'Meeting with HR.',
+    }
+    
+  ];
+
+  
+  if (companies.length === 0) {
+    sampleCompanies.forEach(addCompany);
+  }
+
+  if (communications.length === 0) {
+    sampleCommunications.forEach(addCommunication);
+  }
+};
+
+initializeSampleData();

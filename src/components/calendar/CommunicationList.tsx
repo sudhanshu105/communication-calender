@@ -1,33 +1,37 @@
 import React from 'react';
 import { useStore } from '../../store/useStore';
-import { format, isFuture } from 'date-fns';
+import { format, isFuture, isPast } from 'date-fns';
 import { getNextPlannedCommunication } from '../../utils/communications';
 
 export const CommunicationList: React.FC = () => {
   const { communications, companies, communicationMethods } = useStore();
   const [filter, setFilter] = React.useState<'past' | 'upcoming'>('upcoming');
 
-  const pastCommunications = communications
-    .sort((a, b) => b.date.getTime() - a.date.getTime())
-    .map((comm) => ({
-      ...comm,
-      company: companies.find((c) => c.id === comm.companyId),
-      method: communicationMethods.find((m) => m.id === comm.methodId),
-    }));
+  // Ensure dates are properly parsed
+  const parsedCommunications = communications.map((comm) => ({
+    ...comm,
+    date: new Date(comm.date),
+    company: companies.find((c) => c.id === comm.companyId),
+    method: communicationMethods.find((m) => m.id === comm.methodId),
+  }));
 
-  const upcomingCommunications = companies.map((company) => {
-    const nextComm = getNextPlannedCommunication(
-      company,
-      communications,
-      communicationMethods
-    );
-    return nextComm && isFuture(nextComm.date)
-      ? {
-          company,
-          ...nextComm,
-        }
-      : null;
-  }).filter(Boolean);
+  // Filter past and upcoming communications
+  const pastCommunications = parsedCommunications
+    .filter((comm) => isPast(comm.date))
+    .sort((a, b) => b.date.getTime() - a.date.getTime());
+
+  const upcomingCommunications = companies
+    .map((company) => {
+      const nextComm = getNextPlannedCommunication(
+        company,
+        parsedCommunications,
+        communicationMethods
+      );
+      return nextComm && isFuture(nextComm.date)
+        ? { company, ...nextComm }
+        : null;
+    })
+    .filter(Boolean);
 
   return (
     <div>
