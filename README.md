@@ -2,7 +2,8 @@
   1. Clone the repo
   2. Navigate inside the folder in the terminal
   3. Run npm install to install all the required librabries and dependencies.
-  4. View port 5173 for viewing the live webApp.
+  4. Run npm run dev.
+  5. View port 5173 for viewing the live webApp.
 
 ## Deployment Link : https://communication-calender.vercel.app/
 
